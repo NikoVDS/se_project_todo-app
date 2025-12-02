@@ -32,14 +32,14 @@ class FormValidator {
     }
   }
 
-  hasInvalidInput = (inputList) => {
+  _hasInvalidInput(inputList) {
     return inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
-  };
+  }
 
-  toggleButtonState(inputList, buttonElement) {
-    if (this.hasInvalidInput(inputList)) {
+  _toggleButtonState(inputList, buttonElement) {
+    if (this._hasInvalidInput(inputList)) {
       buttonElement.classList.add(this._inactiveButtonClass);
       buttonElement.disabled = true;
     } else {
@@ -56,12 +56,12 @@ class FormValidator {
       this._submitButtonSelector
     );
 
-    this.toggleButtonState(this._inputList, this._buttonElement);
+    this._toggleButtonState(this._inputList, this._buttonElement);
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this.toggleButtonState(this._inputList, this._buttonElement);
+        this._toggleButtonState(this._inputList, this._buttonElement);
       });
     });
   }
@@ -75,7 +75,7 @@ class FormValidator {
 
   resetValidation() {
     this._formEl.reset();
-    this.toggleButtonState(this._inputList, this._buttonElement);
+    this._toggleButtonState(this._inputList, this._buttonElement);
   }
 }
 
