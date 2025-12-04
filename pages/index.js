@@ -23,9 +23,6 @@ const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
   const todoElement = todo.getView();
 
-  // todoNameEl.textContent = data.name;
-  // todoCheckboxEl.checked = data.completed;
-
   // // Apply id and for attributes.
   // // The id will initially be undefined for new todos.
 
@@ -50,12 +47,12 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   // Create a date object and adjust for timezone
   const date = new Date(dateInput);
+
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
   const id = uuidv4();
   const values = { name, date, id };
-  const todo = generateTodo(values);
-  todosList.append(todo);
+  renderTodo(values);
   closeModal(addTodoPopup);
   newTodoValidator.resetValidation();
 });
@@ -67,3 +64,9 @@ initialTodos.forEach((item) => {
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();
+
+// Generate and append todos
+const renderTodo = (data) => {
+  const todo = generateTodo(data);
+  todosList.append(todo);
+};
